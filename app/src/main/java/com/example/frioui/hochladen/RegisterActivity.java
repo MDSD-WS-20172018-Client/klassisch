@@ -36,11 +36,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import static android.Manifest.permission.READ_CONTACTS;
 import android.content.Intent;
+import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity   implements View.OnClickListener {
 
 
-    EditText  etEmail, etUsername, etPassword;
+    EditText  etPassword2, etUsername, etPassword;
     Button bRegister;
 
     @Override
@@ -48,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity   implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        etEmail = (EditText) findViewById(R.id.etEmail);
+        etPassword2 = (EditText) findViewById(R.id.etPassword2);
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         bRegister = (Button) findViewById(R.id.bRegister);
@@ -64,12 +65,33 @@ public class RegisterActivity extends AppCompatActivity   implements View.OnClic
 
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                String Email = etEmail.getText().toString();
+                String password2 = etPassword2.getText().toString();
 
-              Intent registerIntent = new Intent(this, LoginActivity.class);
-               startActivity(registerIntent);
+                if (equalPassword(password, password2)) {
+                    Intent registerIntent = new Intent(this, LoginActivity.class);
+                    startActivity(registerIntent);
+                } else {
+                    Toast.makeText(this, "Passworteingaben sind nicht gleich", Toast.LENGTH_LONG).show();
+                }
                 break;
         }
+    }
+
+    /**
+     * Methode um zu pruefen, ob die eingegebenen Passwoeter gleich sind.
+     *
+     * @param password1 --> Passwort wie es gesetzt wurde
+     * @param password2 --> Wiederholung, zur Pruefung, ob es gleich ist
+     * @return --> Antwort, ob die Passworteingaben gleich sind
+     */
+    public boolean equalPassword(String password1, String password2){
+        boolean result = false;
+        if (password1.equals(password2)){
+            result = true;
+        } else {
+            result = false;
+        }
+        return result;
     }
 
 }

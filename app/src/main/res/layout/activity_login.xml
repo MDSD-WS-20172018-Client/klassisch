@@ -12,11 +12,10 @@
 
     <!-- Login progress -->
     <AutoCompleteTextView
-        android:id="@+id/etEmail"
+        android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
+        android:hint="Nutzername"
         android:maxLines="1"
         android:layout_marginBottom="10dp"
         android:singleLine="true" />
@@ -45,9 +44,10 @@
         android:textStyle="bold" />
 
 
-    <TextView
-        android:id="@+id/tvRegisterLink"
+    <Button
+        android:id="@+id/bRegister"
         android:layout_width="wrap_content"
+        style="?android:textAppearanceSmall"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="Konto erstellen"

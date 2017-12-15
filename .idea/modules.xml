@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/hochladen.iml" filepath="$PROJECT_DIR$/hochladen.iml" />
+      <module fileurl="file://C:\Users\Mario\AndroidStudioProjects\klassisch\app\app.iml" filepath="C:\Users\Mario\AndroidStudioProjects\klassisch\app\app.iml" />
+      <module fileurl="file://C:\Users\Mario\AndroidStudioProjects\klassisch\hochladen.iml" filepath="C:\Users\Mario\AndroidStudioProjects\klassisch\hochladen.iml" />
+      <module fileurl="file://$PROJECT_DIR$/klassisch.iml" filepath="$PROJECT_DIR$/klassisch.iml" />
     </modules>
   </component>
 </project>
