@@ -142,10 +142,6 @@ public class MainActivity extends AppCompatActivity
             TakeImage();
         } else if (id == R.id.nav_gallery) {
             openImageFromGallery();
-        }  else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
         else if (id == R.id.nav_Abmelden) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
