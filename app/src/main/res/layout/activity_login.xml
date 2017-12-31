@@ -13,17 +13,18 @@
     <!-- Login progress -->
     <AutoCompleteTextView
         android:id="@+id/etUsername"
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:hint="Nutzername"
         android:maxLines="1"
-        android:layout_marginBottom="10dp"
         android:singleLine="true" />
-
 
 
     <EditText
         android:id="@+id/etPassword"
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/prompt_password"
@@ -36,7 +37,7 @@
 
     <Button
         android:id="@+id/bLogin"
-        style="?android:textAppearanceSmall"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -46,7 +47,8 @@
 
     <Button
         android:id="@+id/bRegister"
-        style="?android:textAppearanceSmall"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

@@ -66,13 +66,22 @@ public class RegisterActivity extends AppCompatActivity   implements View.OnClic
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 String password2 = etPassword2.getText().toString();
-
-                if (equalPassword(password, password2)) {
-                    Intent registerIntent = new Intent(this, LoginActivity.class);
-                    startActivity(registerIntent);
-                } else {
-                    Toast.makeText(this, "Passworteingaben sind nicht gleich", Toast.LENGTH_LONG).show();
+                if(username.equals("") || password.equals("") || password2.equals(""))
+                {
+                    Toast.makeText(getApplicationContext(),"Bitte geben Sie das vollständige Feld ein",Toast.LENGTH_SHORT).show();
                 }
+                else
+                {
+                    if (equalPassword(password, password2)) {
+                        User user = new User();
+                        user.setName(username);
+                        user.setPassword(password);
+                        new AsyncTaskUser(RegisterActivity.this,user).execute("http://34.238.158.85:8080/api/users");
+                    } else {
+                        Toast.makeText(this, "Passworteingaben sind nicht gleich", Toast.LENGTH_LONG).show();
+                    }
+                }
+
                 break;
         }
     }

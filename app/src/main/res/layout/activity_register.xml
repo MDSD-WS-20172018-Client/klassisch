@@ -13,6 +13,7 @@
     <!-- Login progress -->
     <AutoCompleteTextView
         android:id="@+id/etUsername"
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/prompt_nutzername"
@@ -24,6 +25,7 @@
 
     <EditText
         android:id="@+id/etPassword"
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/prompt_password"
@@ -35,9 +37,10 @@
 
     <EditText
         android:id="@+id/etPassword2"
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/prompt_password"
+        android:hint= "@string/prompt_password_wiederholen"
         android:inputType="textPassword"
         android:maxLines="1"
         android:layout_marginBottom="10dp"

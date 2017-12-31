@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.app.AlertDialog;
+import android.widget.Toast;
 
 /**
  * A login screen that offers login via email/password.
@@ -41,18 +42,19 @@ import android.app.AlertDialog;
             case R.id.bLogin:
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-              if(password.equals((String)"naoufel") && username.equals((String)"naoufel")) {
-
-              Intent mainIntent = new Intent( LoginActivity.this, MainActivity.class);
-              startActivity(mainIntent);
-              }
-
-              else {
-
-              showErrorMessage();
-
-                 }
+                if(username.equals("") || password.equals(""))
+                {
+                    Toast.makeText(getApplicationContext(),"Bitte geben Sie das vollständige Feld ein",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    User user = new User();
+                    user.setName(username);
+                    user.setPassword(password);
+                    new AsyncTaskUser(LoginActivity.this,user).execute("http://34.238.158.85:8080/api/users/login");
+                }
                 break;
+
             case R.id.bRegister:
                 Intent registerIntent = new Intent(this, RegisterActivity.class);
                 startActivity(registerIntent);
@@ -60,6 +62,37 @@ import android.app.AlertDialog;
 
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     private void showErrorMessage() {

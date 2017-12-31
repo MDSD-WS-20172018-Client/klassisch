@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_Abmelden) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
+            this.finish();
             startActivity(loginIntent);
         }
 
