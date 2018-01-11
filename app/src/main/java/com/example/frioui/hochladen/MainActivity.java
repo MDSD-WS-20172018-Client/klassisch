@@ -1,6 +1,7 @@
 package com.example.frioui.hochladen;
 
-import android.Manifest;
+
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,28 +17,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
 import android.content.Intent;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
-
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import android.widget.AdapterView;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener  {
+        implements NavigationView.OnNavigationItemSelectedListener ,Serializable  {
 
     ImageView Image;
+    String token,FolderId;
+    ListView mListView;
+    List<String> FoldersName = new ArrayList<String>();
+    List<String> FoldersID = new ArrayList<String>();
 
-    EditText  etEmail, etUsername, etPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +51,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,14 +68,32 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
+        token = this.getIntent().getExtras().getString("Token");
+        FolderId = this.getIntent().getExtras().getString("FolderId");
+        mListView = (ListView) findViewById(R.id.listView);
         Image=(ImageView) findViewById(R.id.image_preview);
 
 
+        GetListFolder();
+        mListView.setClickable(true);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                FoldersView(position);
+            }
+        });
+
     }
-
-
+ // diese methode Zeigt die Inhalt von Folder
+public void FoldersView(int position)
+{
+    Intent FolderIntent = new Intent(this, FoldersActivity.class);
+    FolderIntent.putExtra("FolderId",FoldersID.get(position));
+    FolderIntent.putExtra("Token",token);
+    FolderIntent.putExtra("FolderName",FoldersName.get(position));
+   // FolderIntent.putExtra("Folderpatent",token);
+    startActivity(FolderIntent);
+}
 
     private void TakeImage() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -78,23 +101,30 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void openImageFromGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(intent,100);
+      //  Intent intent = new Intent(Intent.ACTION_PICK,
+      ///          MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+       // startActivityForResult(intent,100);
 
-        intent.setType("image/*");
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+
+        startActivityForResult(intent, 42);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==100 &&  resultCode==RESULT_OK)
+        if(requestCode==42 &&  resultCode==RESULT_OK)
         {
            Uri uri=data.getData();
-           Image.setImageURI(uri);
+          // Image.setImageURI(uri);
+
+
         }
         if(requestCode==200 &&  resultCode==RESULT_OK)
         {
             Image.setImageBitmap((Bitmap)data.getExtras().get("data"));
+
         }
     }
 
@@ -131,15 +161,24 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        if (id == R.id.Folder_Erstellen) {
+           Intent FolderIntent = new Intent(this, ErstellenFolderActivity.class);
+            FolderIntent.putExtra("FolderId",FolderId);
+            FolderIntent.putExtra("Token",token);
+            startActivity(FolderIntent);
 
-        if (id == R.id.nav_camera) {
+        } else if (id == R.id.nav_camera) {
             // Handle the camera action
             TakeImage();
+
+
         } else if (id == R.id.nav_gallery) {
             openImageFromGallery();
         }
@@ -153,6 +192,57 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
+
+
+//diese methode Zeigt list von Folder in eine ListView
+    public void GetListFolder() {
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        try {
+            String Url ="http://34.238.158.85:8080/api/"+ this.token+"/"+this.FolderId;
+            client.get( Url,  null, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, final String content) {
+                    try {
+                        JSONObject jsonObj=new JSONObject(content);
+                        FoldersName = new ArrayList<String>();
+                        FoldersID = new ArrayList<String>();
+                        if (statusCode == 200) {
+                            JSONArray  Folderslist= (JSONArray) jsonObj.get("subFolders");
+                           for(int i=0;i<Folderslist.length();i++)
+                            {
+                               JSONObject Folder= (JSONObject) Folderslist.get(i);
+                                FoldersName.add(Folder.getString("name"));
+                                FoldersID.add(Folder.getString("id"));
+                          }
+                            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
+                                    android.R.layout.simple_list_item_1, FoldersName);
+                            mListView.setAdapter(adapter);
+                        }
+                        // Else display error message
+                        else {
+                            Toast.makeText(getApplicationContext(), content, Toast.LENGTH_LONG).show();
+                        }
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        Toast.makeText(getApplicationContext(), e.getMessage() + "Error Occured [Server's JSON response might be invalid]!", Toast.LENGTH_LONG).show();
+                    }
+                }
+                @Override
+                public void onFailure(Throwable error, final String content) {
+                    Toast.makeText(getApplicationContext(), content+"Requested resource not found", Toast.LENGTH_LONG).show();
+                }
+            });
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 
 
 }

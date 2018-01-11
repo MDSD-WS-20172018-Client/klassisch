@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.frioui.hochladen.ErstellenFolderActivity">
+
+
+    <EditText
+        android:id="@+id/etFolderName"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Folder Name "
+        android:imeActionId="6"
+        android:imeOptions="actionUnspecified"
+        android:inputType="text"
+        android:maxLines="1"
+        android:singleLine="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:scaleType="centerCrop">
+
+        <Button
+            android:id="@+id/bErstellen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginTop="16dp"
+            android:text="Folder Erstellen"
+            android:textStyle="bold" />
+        <Button
+            android:id="@+id/bAbbrechen"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Abbrechen"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>
