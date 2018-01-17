@@ -1,11 +1,8 @@
 package com.example.frioui.hochladen;
 
 
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.net.Uri;
+
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -20,7 +17,6 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.content.Intent;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,7 +34,6 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener ,Serializable  {
 
-    ImageView Image;
     String token,FolderId;
     ListView mListView;
     List<String> FoldersName = new ArrayList<String>();
@@ -71,7 +66,6 @@ public class MainActivity extends AppCompatActivity
         token = this.getIntent().getExtras().getString("Token");
         FolderId = this.getIntent().getExtras().getString("FolderId");
         mListView = (ListView) findViewById(R.id.listView);
-        Image=(ImageView) findViewById(R.id.image_preview);
 
 
         GetListFolder();
@@ -84,49 +78,22 @@ public class MainActivity extends AppCompatActivity
         });
 
     }
+
  // diese methode Zeigt die Inhalt von Folder
 public void FoldersView(int position)
 {
     Intent FolderIntent = new Intent(this, FoldersActivity.class);
+    FolderIntent.putExtra("FolderMain",FolderId);
     FolderIntent.putExtra("FolderId",FoldersID.get(position));
     FolderIntent.putExtra("Token",token);
     FolderIntent.putExtra("FolderName",FoldersName.get(position));
-   // FolderIntent.putExtra("Folderpatent",token);
+    FolderIntent.putExtra("Folderpatent",token);
     startActivity(FolderIntent);
 }
 
-    private void TakeImage() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent,200);
-    }
-
-    private void openImageFromGallery() {
-      //  Intent intent = new Intent(Intent.ACTION_PICK,
-      ///          MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-       // startActivityForResult(intent,100);
-
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*");
-
-        startActivityForResult(intent, 42);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==42 &&  resultCode==RESULT_OK)
-        {
-           Uri uri=data.getData();
-          // Image.setImageURI(uri);
 
 
-        }
-        if(requestCode==200 &&  resultCode==RESULT_OK)
-        {
-            Image.setImageBitmap((Bitmap)data.getExtras().get("data"));
 
-        }
-    }
 
 
     @Override
@@ -154,9 +121,7 @@ public void FoldersView(int position)
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -174,15 +139,7 @@ public void FoldersView(int position)
             FolderIntent.putExtra("Token",token);
             startActivity(FolderIntent);
 
-        } else if (id == R.id.nav_camera) {
-            // Handle the camera action
-            TakeImage();
-
-
-        } else if (id == R.id.nav_gallery) {
-            openImageFromGallery();
-        }
-        else if (id == R.id.nav_Abmelden) {
+        } else if (id == R.id.nav_Abmelden) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             this.finish();
             startActivity(loginIntent);
@@ -198,6 +155,7 @@ public void FoldersView(int position)
 
 
 //diese methode Zeigt list von Folder in eine ListView
+
     public void GetListFolder() {
 
         AsyncHttpClient client = new AsyncHttpClient();

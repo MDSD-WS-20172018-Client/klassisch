@@ -27,4 +27,7 @@
     <string name="title_activity_login2">Sign in</string>
     <string name="title_activity_maps">Map</string>
     <string name="txt_Show">Please wait...</string>
+    <string name="menu_add_file">Foto machen</string>
+    <string name="datei_w_hlen">Datei wählen</string>
+    <string name="delete_Folder">Delete Folder </string>
 </resources>

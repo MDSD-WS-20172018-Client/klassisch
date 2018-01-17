@@ -23,9 +23,7 @@ public class ErstellenFolderActivity extends AppCompatActivity implements View.O
 
     Button bErstellen, bAbbrechen;
     EditText etFolderName;
-    boolean Result;
-    String token,FolderId,FolderName;
-    private MainActivity activity;
+    String token,FolderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +44,6 @@ public class ErstellenFolderActivity extends AppCompatActivity implements View.O
 
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -62,7 +58,6 @@ public class ErstellenFolderActivity extends AppCompatActivity implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bErstellen:
-
                 String FolderName = etFolderName.getText().toString();
                 if(!FolderName.equals("")) {
                   FolderErstellen(FolderName);
@@ -77,9 +72,6 @@ public class ErstellenFolderActivity extends AppCompatActivity implements View.O
                 {
                     Toast.makeText(getApplicationContext(),"Bitte geben Sie das vollständige Feld ein",Toast.LENGTH_SHORT).show();
                 }
-
-
-
             case R.id.bAbbrechen:
                 this.finish();
                 break;
@@ -88,11 +80,9 @@ public class ErstellenFolderActivity extends AppCompatActivity implements View.O
 
     }
 
-
+    //diese methode um eine Folder zu erstellen
     public void FolderErstellen(String FolderName) {
 
-        RequestParams params = new RequestParams();
-        params.put("name", FolderName);
         AsyncHttpClient client = new AsyncHttpClient();
         JSONObject jsonParams = new JSONObject();
         try {
@@ -100,13 +90,9 @@ public class ErstellenFolderActivity extends AppCompatActivity implements View.O
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType("application/json");
             String Url ="http://34.238.158.85:8080/api/"+ this.token+"/"+this.FolderId;
-            //  client.post("http://34.238.158.85:8080/api/users/login",params,new AsyncHttpResponseHandler(){
             client.post(this, Url,  entity, "application/json", new AsyncHttpResponseHandler() {
                 @Override
-                // public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 public void onSuccess(int statusCode, final String content) {
-
-
                         if (statusCode == 200) {
 
                             Toast.makeText(getApplicationContext(), "Folder Erstellung erfolgreich", Toast.LENGTH_SHORT).show();
@@ -116,10 +102,8 @@ public class ErstellenFolderActivity extends AppCompatActivity implements View.O
                         else {
                             Toast.makeText(getApplicationContext(), content, Toast.LENGTH_LONG).show();
                         }
-
                 }
                 @Override
-                // public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 public void onFailure(Throwable error, final String content) {
                     Toast.makeText(getApplicationContext(), content+"Requested resource not found", Toast.LENGTH_LONG).show();
 
