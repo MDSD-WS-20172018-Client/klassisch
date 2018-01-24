@@ -212,7 +212,7 @@ final int pos =position;
 
         AsyncHttpClient client = new AsyncHttpClient();
         try {
-            String Url ="http://34.238.158.85:8080/api/"+ this.token+"/"+this.FolderId;
+            String Url ="http://34.239.181.2:8080/api/"+ this.token+"/"+this.FolderId;
           //  client.delete(this,)
             client.delete(this, Url, new AsyncHttpResponseHandler() {
 
@@ -254,7 +254,7 @@ final int pos =position;
 
         AsyncHttpClient client = new AsyncHttpClient();
         try {
-            String Url ="http://34.238.158.85:8080/api/"+ this.token+"/"+this.FolderId+"/files/"+IDfile;
+            String Url ="http://34.239.181.2:8080/api/"+ this.token+"/"+this.FolderId+"/files/"+IDfile;
             //  client.delete(this,)
             client.delete(this, Url, new AsyncHttpResponseHandler() {
 
@@ -296,7 +296,7 @@ final int pos =position;
 
         AsyncHttpClient client = new AsyncHttpClient();
         try {
-            String Url ="http://34.238.158.85:8080/api/"+ this.token+"/"+this.FolderId;
+            String Url ="http://34.239.181.2:8080/api/"+ this.token+"/"+this.FolderId;
             client.get( Url,  null, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, final String content) {
@@ -393,7 +393,7 @@ final int pos =position;
 
     public void Filehochladen(Uri uriContent)
     {
-        String Url ="http://34.238.158.85:8080/api/"+ this.token+"/"+this.FolderId+"/";
+        String Url ="http://34.239.181.2:8080/api/"+ this.token+"/"+this.FolderId+"/";
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();

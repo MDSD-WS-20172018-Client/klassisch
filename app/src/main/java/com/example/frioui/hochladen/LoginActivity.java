@@ -30,7 +30,6 @@ import android.widget.Toast;
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         bRegister = (Button) findViewById(R.id.bRegister);
-
         bLogin.setOnClickListener(this);
         bRegister.setOnClickListener(this);
     }
@@ -51,7 +50,7 @@ import android.widget.Toast;
                     User user = new User();
                     user.setName(username);
                     user.setPassword(password);
-                    new AsyncTaskUser(LoginActivity.this,user).execute("http://34.238.158.85:8080/api/users/login");
+                    new AsyncTaskUser(LoginActivity.this,user).execute("http://34.239.181.2:8080/api/users/login");
                 }
                 break;
 

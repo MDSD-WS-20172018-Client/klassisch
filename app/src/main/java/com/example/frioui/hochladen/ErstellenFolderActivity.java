@@ -89,7 +89,7 @@ public class ErstellenFolderActivity extends AppCompatActivity implements View.O
             jsonParams.put("name", FolderName);
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType("application/json");
-            String Url ="http://34.238.158.85:8080/api/"+ this.token+"/"+this.FolderId;
+            String Url ="http://34.239.181.2:8080/api/"+ this.token+"/"+this.FolderId;
             client.post(this, Url,  entity, "application/json", new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, final String content) {

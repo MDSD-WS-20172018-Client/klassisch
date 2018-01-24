@@ -46,14 +46,14 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+     //   FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+      //  fab.setOnClickListener(new View.OnClickListener() {
+       //     @Override
+       //     public void onClick(View view) {
+        //        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            //            .setAction("Action", null).show();
+       //     }
+      //  });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -160,7 +160,7 @@ public void FoldersView(int position)
 
         AsyncHttpClient client = new AsyncHttpClient();
         try {
-            String Url ="http://34.238.158.85:8080/api/"+ this.token+"/"+this.FolderId;
+            String Url ="http://34.239.181.2:8080/api/"+ this.token+"/"+this.FolderId;
             client.get( Url,  null, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, final String content) {

@@ -76,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity   implements View.OnClic
                         User user = new User();
                         user.setName(username);
                         user.setPassword(password);
-                        new AsyncTaskUser(RegisterActivity.this,user).execute("http://34.238.158.85:8080/api/users");
+                        new AsyncTaskUser(RegisterActivity.this,user).execute("http://34.239.181.2:8080/api/users");
                     } else {
                         Toast.makeText(this, "Passworteingaben sind nicht gleich", Toast.LENGTH_LONG).show();
                     }
